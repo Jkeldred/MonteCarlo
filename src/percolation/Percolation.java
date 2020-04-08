@@ -9,13 +9,24 @@ public class Percolation
 {
     private boolean[][] grid;
     private WeightedQuickUnionUF UF;
+    private int N;
 
     //create an N by N grid with all sites blocked
     public Percolation(int N) {
         if (N <= 0)
             throw new IllegalArgumentException("N value cannot be smaller than or equal to 0");
-
+        
+    this.N = N;
     this.grid = new boolean[N][N];
+    this.UF = new WeightedQuickUnionUF(N);
+
+    for (int i = 0; i < N; i++) {
+        for (int j = 0; j < N; j++) {
+            grid[i][j] = false;
+        }
+
+    }
+
     }
     // open site (row i, column j) if it is not already open
     public void open(int i, int j){
@@ -23,6 +34,7 @@ public class Percolation
             return;
         } else
             grid[i][j] = true;
+
     }
 
     //is site (row i, column j) open?
@@ -42,8 +54,8 @@ public class Percolation
         return false;
     }
 
-    private void toOneD(int N) {
-
+    private int xyto1D(int row, int column) {
+       return (row * N) + column;
     }
 
     public static void main(String[] args) {
