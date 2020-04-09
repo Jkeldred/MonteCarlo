@@ -22,20 +22,19 @@ public class UnionedObjects
      * @return
      */
     public int find(int N) {
+        validate(N);
         while (Parent[N] != N) {
             N = Parent[N];
         }
         return N;
     }
 
-
-
     /**
      * Verifies whether or not 2 locations are connected and in the same subset.
      * @return
      */
-    public boolean connected() {
-        return false;
+    public boolean connected(int q, int p){
+        return find(p) == find(q);
     }
 
     /**
@@ -43,7 +42,7 @@ public class UnionedObjects
      * @return
      */
     public boolean validate(int n) {
-        return (n <= count && n >= 0);
+        return (n <= Parent.length && n >= 0);
     }
 
     public int count() {
@@ -51,6 +50,17 @@ public class UnionedObjects
     }
 
     public void union(int q, int p) {
+        int rootQ = find(q);
+        int rootP = find(p);
 
+        if (size[rootQ] <= size[rootP])
+        {
+           Parent[rootQ] = rootP;
+           size[rootP] += size[rootQ];
+        } else {
+            Parent[rootP] = rootQ;
+            size[rootQ] += size[rootP];
+        }
+        count--;
     }
 }
